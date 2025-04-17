@@ -93,4 +93,13 @@ class CabanaController extends Controller
     {
         //
     }
+    public function home()
+{
+    $cabanas = Cabana::where('disponible', true)->get();
+
+    return Inertia::render('Home', [
+        'cabanas' => $cabanas,
+    ]);
+}
+
 }
