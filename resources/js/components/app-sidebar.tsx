@@ -4,14 +4,39 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { Bed, BookOpen, Globe, Headphones, LayoutGrid, MapPin, Folder } from 'lucide-react'; 
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: '/dashboard',
+        href: '/',
         icon: LayoutGrid,
+    },
+    {
+        title: 'Reservación Alojamiento',
+        href: '/reservacion-alojamiento',
+        icon: Bed, 
+    },
+    {
+        title: 'Paquetes Turísticos',
+        href: '/paquetes-turisticos',
+        icon: MapPin, 
+    },
+    {
+        title: 'Experiencias Culturales y de Aventura',
+        href: '/experiencias-culturales',
+        icon: Globe, 
+    },
+    {
+        title: 'Atención Personalizada',
+        href: '/atencion-personalizada',
+        icon: Headphones, 
+    },
+    {
+        title: 'Turismo Educativo y Temático',
+        href: '/turismo-educativo',
+        icon: BookOpen, 
     },
 ];
 
