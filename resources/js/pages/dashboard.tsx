@@ -57,7 +57,7 @@ const Dashboard = ({ cabanas }: Props) => {
                             cabanas.map((cabana) => {
                                 console.log(cabana); // Verifica los datos de cada cabaña
                                 return (
-                                    cabana.disponible && (
+                                    Boolean(cabana.disponible) && (
                                         <div
                                             key={cabana.id}
                                             className="rounded-xl border border-white/10 bg-black/80 p-4 text-white shadow transition-all hover:scale-105 hover:shadow-xl"

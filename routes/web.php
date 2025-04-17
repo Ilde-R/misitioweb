@@ -1,12 +1,17 @@
 <?php
 
 use App\Http\Controllers\CabanaController;
+use App\Models\Cabana;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 //Pantalla Principal
 Route::get('/', function () {
-    return Inertia::render('dashboard');
+    $cabanas = Cabana::where('disponible', true)->get();
+
+    return Inertia::render('dashboard', [
+        'cabanas' => $cabanas,
+    ]);
 })->name('home');
 
 //Route::middleware(['auth'])->group(function () {
@@ -14,6 +19,8 @@ Route::get('/', function () {
     Route::get('/cabanas/create', [CabanaController::class, 'create'])->name('cabanas.create');
     Route::post('/cabanas', [CabanaController::class, 'store'])->name('cabanas.store');
 //});
+
+
 
 
 
