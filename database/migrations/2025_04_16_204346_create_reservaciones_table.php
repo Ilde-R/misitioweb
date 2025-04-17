@@ -20,8 +20,6 @@ return new class extends Migration
             $table->decimal('total', 10, 2);
             $table->enum('estado', ['pendiente', 'confirmada', 'cancelada'])->default('pendiente');
             $table->timestamps();
-            $table->unsignedBigInteger('cliente_id')->nullable(); // No es necesario usar 'after' aquí
-            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('set null');
         });
     }
 
