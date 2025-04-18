@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cabana;
 use App\Models\Reserva;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ReservaController extends Controller
 {
@@ -13,17 +14,33 @@ class ReservaController extends Controller
      */
     public function index()
     {
-        $reservas = Reserva::with('cabana')->get();
-        return view('admin.reservas.index', compact('reservas'));
+        // Obtener todas las reservas, incluyendo la información de la cabana y el usuario
+        $reservas = Reserva::with('cabana', 'user')->get();
+
+        // Pasar los datos a la vista de Inertia
+        return Inertia::render('reservaciones/index', [
+            'reservas' => $reservas,  // Aquí le pasas todas las reservas al frontend
+        ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        $cabanas = Cabana::all();
-        return view('admin.reservas.create', compact('cabanas/index'));
+        // Verificar si se pasó el id de la cabaña
+        $cabana_id = $request->query('cabana_id');
+        $cabana = Cabana::find($cabana_id);
+
+        // Si no existe la cabaña, redirigir al listado de cabañas con un mensaje de error
+        if (!$cabana) {
+            return redirect()->route('cabanas.seleccionarcabana')
+                             ->with('error', 'Cabaña no encontrada');
+        }
+
+        // Mostrar la vista de reserva con la cabaña seleccionada
+        return view('reservas.create', compact('cabana'));
     }
 
     /**
@@ -77,4 +94,27 @@ class ReservaController extends Controller
     {
         //
     }
+    public function confirmar(Reserva $reserva)
+{
+    if (!$reserva->cabana->disponible) {
+        return back()->with('error', 'La cabaña ya está ocupada.');
+    }
+
+    $reserva->estado = 'confirmada';
+    $reserva->save();
+
+    $reserva->cabana->update(['disponible' => false]);
+
+    return back()->with('success', 'Reserva confirmada. Cabaña marcada como no disponible.');
+}
+public function cancelar(Reserva $reserva)
+{
+    $reserva->estado = 'cancelada';
+    $reserva->save();
+
+    $reserva->cabana->update(['disponible' => true]);
+
+    return back()->with('success', 'Reserva cancelada. Cabaña marcada como disponible.');
+}
+
 }

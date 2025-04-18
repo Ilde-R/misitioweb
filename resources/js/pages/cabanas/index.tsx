@@ -36,23 +36,21 @@ const Index = ({ cabanas }: Props) => {
                 <h1 className="mb-4 text-3xl font-bold">Cabañas Registradas</h1>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {cabanas.map((cabana) => (
-    <div key={cabana.id} className="overflow-hidden rounded-lg bg-black/80 shadow-lg text-white">
-        <img
-            src={`/storage/${cabana.imagen}`}
-            alt={cabana.nombre}
-            className="h-48 w-full object-cover"
-        />
-        <div className="p-4">
-            <h2 className="text-xl font-semibold">{cabana.nombre}</h2>
-            <p className="text-sm text-gray-300">{cabana.ubicacion}</p>
-            <p className="mt-2 text-lg font-semibold">${cabana.precio_noche} por noche</p>
-            <p className={`mt-2 ${cabana.disponible ? 'text-green-400' : 'text-red-400'}`}>
-                {cabana.disponible ? 'Disponible' : 'No disponible'}
-            </p>
-        </div>
-    </div>
-))}
-
+                        <div
+                            key={cabana.id}
+                            className="transform overflow-hidden rounded-lg bg-black/80 text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:bg-black/60"
+                        >
+                            <img src={`/storage/${cabana.imagen}`} alt={cabana.nombre} className="h-48 w-full object-cover" />
+                            <div className="p-4">
+                                <h2 className="text-xl font-semibold">{cabana.nombre}</h2>
+                                <p className="text-sm text-gray-300">{cabana.ubicacion}</p>
+                                <p className="mt-2 text-lg font-semibold">${cabana.precio_noche} por noche</p>
+                                <p className={`mt-2 ${cabana.disponible ? 'text-green-400' : 'text-red-400'}`}>
+                                    {cabana.disponible ? 'Disponible' : 'No disponible'}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </AppLayout>

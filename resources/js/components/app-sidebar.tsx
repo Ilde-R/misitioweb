@@ -15,7 +15,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Reservación Alojamiento',
-        href: '/reservacion-alojamiento',
+        href: '/reservas',
         icon: Bed, 
     },
     {

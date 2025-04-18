@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CabanaController;
+use App\Http\Controllers\ReservaController;
 use App\Models\Cabana;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,13 +15,20 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-//Route::middleware(['auth'])->group(function () {
-    Route::get('/cabanas', [CabanaController::class, 'index'])
-    ->middleware(['auth', 'verified', 'can:index']) // Verifica que el usuario tenga el permiso 'view-cabanas'
+//Cabañas
+Route::get('/cabanas', [CabanaController::class, 'index'])
+    ->middleware(['auth', 'verified', 'can:index']) 
     ->name('cabanas.index');
-    Route::get('/cabanas/create', [CabanaController::class, 'create'])->name('cabanas.create');
-    Route::post('/cabanas', [CabanaController::class, 'store'])->name('cabanas.store');
-//});
+Route::get('/cabanas/create', [CabanaController::class, 'create'])->name('cabanas.create');
+Route::post('/cabanas', [CabanaController::class, 'store'])->name('cabanas.store');
+
+//Reservas
+Route::get('/reservas', [ReservaController::class, 'index'])
+    ->middleware(['auth','verified'])
+    ->name('reservas.index');
+    Route::get('/cabanas/seleccionarcabana', [CabanaController::class, 'index'])->name('cabanas.seleccionarcabana');
+
+
 
 
 

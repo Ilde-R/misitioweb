@@ -100,6 +100,8 @@ class CabanaController extends Controller
     return Inertia::render('Home', [
         'cabanas' => $cabanas,
     ]);
+    
 }
+
 
 }
