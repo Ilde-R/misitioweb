@@ -15,7 +15,9 @@ Route::get('/', function () {
 })->name('home');
 
 //Route::middleware(['auth'])->group(function () {
-    Route::get('/cabanas', [CabanaController::class, 'index'])->name('cabanas.index');
+    Route::get('/cabanas', [CabanaController::class, 'index'])
+    ->middleware(['auth', 'verified', 'can:index']) // Verifica que el usuario tenga el permiso 'view-cabanas'
+    ->name('cabanas.index');
     Route::get('/cabanas/create', [CabanaController::class, 'create'])->name('cabanas.create');
     Route::post('/cabanas', [CabanaController::class, 'store'])->name('cabanas.store');
 //});
