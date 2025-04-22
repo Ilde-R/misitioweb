@@ -32,41 +32,44 @@ const Dashboard = ({ cabanas }: Props) => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Turismo - Dashboard" />
-            <div className="flex min-h-screen flex-col gap-6 p-6">
+            <div className="flex min-h-screen flex-col gap-8 p-8">
                 {/* Sección de bienvenida */}
-                <div className="relative h-64 overflow-hidden rounded-xl shadow-lg">
+                <div className="relative h-64 overflow-hidden rounded-2xl shadow-lg">
                     <img
                         src="https://picsum.photos/1200/400?grayscale&blur=1"
                         alt="Paisaje de bienvenida"
                         className="absolute inset-0 h-full w-full object-cover"
                     />
-                    <div className="relative z-10 flex h-full w-full items-center justify-center bg-black/40">
+                    <div className="relative z-10 flex h-full w-full items-center justify-center bg-black/50">
                         <div className="text-center text-white">
-                            <h1 className="text-4xl font-bold">Bienvenido a la aventura</h1>
-                            <p className="text-lg">Turismo, naturaleza y descanso en un solo lugar</p>
+                            <h1 className="text-5xl font-extrabold">Bienvenido a la aventura</h1>
+                            <p className="mt-2 text-xl">Turismo, naturaleza y descanso en un solo lugar</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Cabañas disponibles */}
                 <section>
-                    <h2 className="mb-4 text-2xl font-semibold text-white">🏡 Cabañas disponibles</h2>
-                    <div className="grid gap-4 md:grid-cols-3">
-                        {/* Aseguramos que cabanas sea un arreglo */}
+                    <h2 className="text-subtitle-light dark:text-subtitle-dark mt-8 text-2xl font-semibold">Cabañas Disponibles</h2>{' '}
+                    {/* Añadí margen superior al título */}
+                    <div className="grid gap-8 md:grid-cols-3">
                         {Array.isArray(cabanas) && cabanas.length > 0 ? (
                             cabanas.map((cabana) => {
-                                console.log(cabana); // Verifica los datos de cada cabaña
                                 return (
                                     Boolean(cabana.disponible) && (
                                         <div
                                             key={cabana.id}
-                                            className="rounded-xl border border-white/10 bg-black/80 p-4 text-white shadow transition-all hover:scale-105 hover:shadow-xl"
+                                            className="mt-6 rounded-2xl border border-white/20 bg-black/70 p-6 text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
                                         >
-                                            <img src={`/storage/${cabana.imagen}`} alt={cabana.nombre} className="h-48 w-full object-cover" />
-                                            <h3 className="text-lg font-bold">{cabana.nombre}</h3>
-                                            <p className="mb-2 text-sm text-gray-300">{cabana.ubicacion}</p>
-                                            <p className="mt-2 text-lg font-semibold">${cabana.precio_noche} por noche</p>
-                                            <p className={`mt-2 ${cabana.disponible ? 'text-green-400' : 'text-red-400'}`}>
+                                            <img
+                                                src={`/storage/${cabana.imagen}`}
+                                                alt={cabana.nombre}
+                                                className="h-56 w-full rounded-xl object-cover"
+                                            />
+                                            <h3 className="mt-4 text-xl font-bold">{cabana.nombre}</h3>
+                                            <p className="text-sm text-gray-300">{cabana.ubicacion}</p>
+                                            <p className="mt-3 text-lg font-semibold">${cabana.precio_noche} por noche</p>
+                                            <p className={`mt-3 text-sm ${cabana.disponible ? 'text-green-400' : 'text-red-400'}`}>
                                                 {cabana.disponible ? 'Disponible' : 'No disponible'}
                                             </p>
                                         </div>
@@ -81,16 +84,16 @@ const Dashboard = ({ cabanas }: Props) => {
 
                 {/* Caminatas */}
                 <section>
-                    <h2 className="mb-4 text-2xl font-semibold text-white">🚶 Caminatas y rutas</h2>
-                    <div className="grid gap-4 md:grid-cols-2">
-                        <div className="rounded-xl border border-white/10 bg-black/80 p-4 text-white shadow">
-                            <h3 className="font-semibold">Sendero del Bosque Encantado</h3>
+                    <h2 className="text-subtitle-light dark:text-subtitle-dark text-2xl font-semibold">Caminatas</h2>
+                    <div className="grid gap-6 md:grid-cols-2">
+                        <div className="rounded-2xl border border-white/20 bg-black/70 p-6 text-white shadow-lg">
+                            <h3 className="text-xl font-semibold">Sendero del Bosque Encantado</h3>
                             <p className="text-sm text-gray-300">
                                 Un recorrido de 5km entre árboles centenarios. Ideal para familias y amantes de la naturaleza.
                             </p>
                         </div>
-                        <div className="rounded-xl border border-white/10 bg-black/80 p-4 text-white shadow">
-                            <h3 className="font-semibold">Ruta de los Miradores</h3>
+                        <div className="rounded-2xl border border-white/20 bg-black/70 p-6 text-white shadow-lg">
+                            <h3 className="text-xl font-semibold">Ruta de los Miradores</h3>
                             <p className="text-sm text-gray-300">
                                 Caminata moderada con vistas espectaculares al amanecer. Apta para mayores de 12 años.
                             </p>
@@ -100,8 +103,8 @@ const Dashboard = ({ cabanas }: Props) => {
 
                 {/* Lugares para visitar */}
                 <section>
-                    <h2 className="mb-4 text-2xl font-semibold text-white">📍 Lugares recomendados</h2>
-                    <ul className="list-inside list-disc space-y-2 text-sm text-gray-300">
+                    <h2 className="text-subtitle-light dark:text-subtitle-dark text-2xl font-semibold">Lugares por visitar</h2>
+                    <ul className="list-inside list-disc space-y-4 text-sm text-gray-300">
                         <li>Mirador de la Peña Blanca</li>
                         <li>Parque de las Luciérnagas</li>
                         <li>Cascada El Salto Secreto</li>
@@ -110,7 +113,7 @@ const Dashboard = ({ cabanas }: Props) => {
                 </section>
 
                 {/* Footer */}
-                <footer className="text-muted-foreground mt-12 border-t pt-6 text-center text-sm">
+                <footer className="text-muted-foreground mt-16 border-t pt-8 text-center text-sm">
                     © 2025 Turismo Encantado ·{' '}
                     <a href="#" className="text-primary hover:underline">
                         Facebook
