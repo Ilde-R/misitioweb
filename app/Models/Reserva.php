@@ -10,14 +10,17 @@ class Reserva extends Model
     use HasFactory;
 
     protected $table = 'reservaciones';
-    protected $fillable = [
-        'user_id',
-        'cabana_id',
-        'fecha_inicio',
-        'fecha_fin',
-        'total',
-        'estado',
-    ];
+protected $fillable = [
+    'user_id',
+    'cabana_id',
+    'fecha_inicio',
+    'fecha_fin',
+    'total',
+    'estado',
+    'metodo_pago',
+    'notas',
+    'numero_personas',
+];
 
     public function user()
     {

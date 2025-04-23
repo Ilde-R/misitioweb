@@ -15,11 +15,11 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface Cabana {
     id: number;
     nombre: string;
-    ubicacion: string;
+    direccion: string;
     capacidad: number;
     precio_noche: number;
     disponible: boolean;
-    imagen: string | null; // Asegurarnos de que la imagen puede ser null
+    imagen: string | null;
 }
 
 // Definir las propiedades que recibirá el componente
@@ -50,7 +50,7 @@ const Dashboard = ({ cabanas }: Props) => {
 
                 {/* Cabañas disponibles */}
                 <section>
-                    <h2 className="text-subtitle-light dark:text-subtitle-dark mt-8 text-2xl font-semibold">Cabañas Disponibles</h2>{' '}
+                    <h2 className="text-subtitle-light dark:text-subtitle-dark mt-8 text-2xl font-semibold">Cabañas Disponibles</h2>
                     {/* Añadí margen superior al título */}
                     <div className="grid gap-8 md:grid-cols-3">
                         {Array.isArray(cabanas) && cabanas.length > 0 ? (
@@ -67,7 +67,7 @@ const Dashboard = ({ cabanas }: Props) => {
                                                 className="h-56 w-full rounded-xl object-cover"
                                             />
                                             <h3 className="mt-4 text-xl font-bold">{cabana.nombre}</h3>
-                                            <p className="text-sm text-gray-300">{cabana.ubicacion}</p>
+                                            <p className="text-sm text-gray-300">{cabana.direccion}</p>
                                             <p className="mt-3 text-lg font-semibold">${cabana.precio_noche} por noche</p>
                                             <p className={`mt-3 text-sm ${cabana.disponible ? 'text-green-400' : 'text-red-400'}`}>
                                                 {cabana.disponible ? 'Disponible' : 'No disponible'}

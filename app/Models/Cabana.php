@@ -11,11 +11,17 @@ class Cabana extends Model
 
     protected $fillable = [
         'nombre',
-        'ubicacion',
+        'direccion',
+        'ciudad',
+        'estado',
+        'pais',
         'capacidad',
         'precio_noche',
         'disponible',
         'imagen',
+        'descripcion',
+        'servicios',
+        'politicas',
     ];
 
     /**

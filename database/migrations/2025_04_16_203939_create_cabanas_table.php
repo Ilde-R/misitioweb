@@ -14,11 +14,17 @@ return new class extends Migration
         Schema::create('cabanas', function (Blueprint $table) {
     $table->id();
     $table->string('nombre');
-    $table->string('ubicacion'); // En vez de descripción
+    $table->string('direccion');
+    $table->string('ciudad');
+    $table->string('estado'); 
+    $table->string('pais'); 
     $table->integer('capacidad');
     $table->decimal('precio_noche', 8, 2);
     $table->boolean('disponible')->default(true);
-    $table->string('imagen')->nullable(); // ← Aquí va la imagen
+    $table->string('imagen')->nullable();
+    $table->text('descripcion')->nullable();
+    $table->json('servicios')->nullable();
+    $table->string('politicas')->nullable();
     $table->timestamps();
 });
 

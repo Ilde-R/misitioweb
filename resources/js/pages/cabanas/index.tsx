@@ -15,11 +15,17 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface Cabana {
     id: number;
     nombre: string;
-    ubicacion: string;
+    direccion: string;
+    ciudad: string;
+    estado: string;
+    pais: string;
     capacidad: number;
     precio_noche: number;
     disponible: boolean;
     imagen: string;
+    descripcion: string;
+    servicios: string[];
+    politicas: string;
 }
 
 // Definir las propiedades que recibirá el componente
@@ -43,11 +49,22 @@ const Index = ({ cabanas }: Props) => {
                             <img src={`/storage/${cabana.imagen}`} alt={cabana.nombre} className="h-48 w-full object-cover" />
                             <div className="p-4">
                                 <h2 className="text-xl font-semibold">{cabana.nombre}</h2>
-                                <p className="text-sm text-gray-300">{cabana.ubicacion}</p>
+                                <p className="text-sm text-gray-300">
+                                    {cabana.direccion}, {cabana.ciudad}, {cabana.estado}, {cabana.pais}
+                                </p>
                                 <p className="mt-2 text-lg font-semibold">${cabana.precio_noche} por noche</p>
                                 <p className={`mt-2 ${cabana.disponible ? 'text-green-400' : 'text-red-400'}`}>
                                     {cabana.disponible ? 'Disponible' : 'No disponible'}
                                 </p>
+                                <p className="mt-2 text-sm text-gray-400">{cabana.descripcion}</p>
+                                <ul className="mt-2 text-sm text-gray-300">
+                                    {Array.isArray(cabana.servicios)
+                                        ? cabana.servicios.map((servicio, index) => <li key={index}>- {servicio}</li>)
+                                        : JSON.parse(cabana.servicios || '[]').map((servicio: string, index: number) => (
+                                              <li key={index}>- {servicio}</li>
+                                          ))}
+                                </ul>
+                                <p className="mt-2 text-sm text-gray-400">Políticas: {cabana.politicas}</p>
                             </div>
                         </div>
                     ))}

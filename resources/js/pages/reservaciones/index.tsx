@@ -1,6 +1,7 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
+
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -19,7 +20,7 @@ export interface Reserva {
     estado: 'pendiente' | 'confirmada' | 'cancelada';
     cabana?: {
         nombre: string;
-        ubicacion?: string;
+        direccion?: string;
     };
     user?: {
         name: string;
@@ -36,7 +37,7 @@ const Index = ({ reservas }: Props) => {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Tus Reservaciones" />
             <div className="flex min-h-screen flex-col gap-6 p-6">
-                <h1 className="mb-4 text-3xl font-bold">Tus Reservaciones</h1>
+                <h1 className="mb-4 text-3xl font-bold">Administrar Reservaciones</h1>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {reservas.map((reserva) => (
                         <div key={reserva.id} className="overflow-hidden rounded-lg bg-black/80 text-white shadow-lg">
@@ -69,7 +70,16 @@ const Index = ({ reservas }: Props) => {
                                 <div className="mt-4">
                                     <h3 className="text-lg font-semibold">Cabaña:</h3>
                                     <p className="text-sm">Nombre: {reserva.cabana?.nombre}</p>
-                                    <p className="text-sm">Ubicacion: {reserva.cabana?.ubicacion}</p>
+                                    <p className="text-sm">Ubicacion: {reserva.cabana?.direccion}</p>
+                                </div>
+                                {/* Botón para editar */}
+                                <div className="mt-4">
+                                    <button
+                                        onClick={() => router.get(`/reservas/${reserva.id}/edit`)}
+                                        className="mt-2 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                                    >
+                                        Editar Reserva
+                                    </button>
                                 </div>
                             </div>
                         </div>
