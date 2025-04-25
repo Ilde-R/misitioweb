@@ -2,7 +2,6 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router } from '@inertiajs/react';
 
-
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Reservaciones',
@@ -80,6 +79,12 @@ const Index = ({ reservas }: Props) => {
                                     >
                                         Editar Reserva
                                     </button>
+                                    <button
+                                        onClick={() => router.delete(`/reservas/${reserva.id}`)}
+                                        className="mt-2 rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                                        >
+                                            Eliminar Reserva
+                                        </button>
                                 </div>
                             </div>
                         </div>

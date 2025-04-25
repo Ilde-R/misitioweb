@@ -146,9 +146,10 @@ public function update(Request $request, string $id)
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Reserva $reserva)
     {
-        //
+        $reserva->delete();
+        return redirect()->route('reservas.index')->with('success', 'Reserva eliminada correctamente.');
     }
     public function confirmar(Reserva $reserva)
 {

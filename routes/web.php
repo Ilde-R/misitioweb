@@ -40,6 +40,10 @@ Route::get('/reservas/{reserva}/edit', [ReservaController::class, 'edit'])
 Route::put('/reservas/{reserva}', [ReservaController::class, 'update'])
     ->middleware(['auth', 'verified'])
     ->name('reservas.update');
+// Eliminar la reserva
+Route::delete('/reservas/{reserva}', [ReservaController::class, 'destroy'])
+    ->middleware(['auth', 'verified'])
+    ->name('reservas.destroy');
 
 
 
