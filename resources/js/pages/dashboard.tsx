@@ -1,4 +1,3 @@
-// src/pages/Dashboard.tsx
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
@@ -51,19 +50,18 @@ const Dashboard = ({ cabanas }: Props) => {
                 {/* Cabañas disponibles */}
                 <section>
                     <h2 className="text-subtitle-light dark:text-subtitle-dark mt-8 text-2xl font-semibold">Cabañas Disponibles</h2>
-                    {/* Añadí margen superior al título */}
                     <div className="grid gap-8 md:grid-cols-3">
                         {Array.isArray(cabanas) && cabanas.length > 0 ? (
                             cabanas.map((cabana) => {
                                 return (
-                                    Boolean(cabana.disponible) && (
+                                    cabana.disponible && (
                                         <div
                                             key={cabana.id}
                                             className="mt-6 rounded-2xl border border-white/20 bg-black/70 p-6 text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
                                         >
                                             <img
-                                                src={`/storage/${cabana.imagen}`}
-                                                alt={cabana.nombre}
+                                                src={cabana.imagen ? `/storage/${cabana.imagen}` : '/images/default-cabana.jpg'}
+                                                alt={`Imagen de la cabaña ${cabana.nombre}`}
                                                 className="h-56 w-full rounded-xl object-cover"
                                             />
                                             <h3 className="mt-4 text-xl font-bold">{cabana.nombre}</h3>

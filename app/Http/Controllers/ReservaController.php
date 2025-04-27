@@ -173,5 +173,13 @@ public function cancelar(Reserva $reserva)
 
     return back()->with('success', 'Reserva cancelada. Cabaña marcada como disponible.');
 }
+public function archivar($id)
+{
+    $reservacion = Reserva::findOrFail($id);
+    $reservacion->estado = 'inactiva'; // Cambiar el estado a inactiva
+    $reservacion->save();
+
+    return redirect()->back()->with('success', 'Reserva archivada correctamente.');
+}
 
 }

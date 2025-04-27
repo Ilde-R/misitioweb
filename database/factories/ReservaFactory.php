@@ -19,7 +19,7 @@ class ReservaFactory extends Factory
             'fecha_inicio' => $inicio,
             'fecha_fin' => $fin,
             'total' => $this->faker->randomFloat(2, 500, 3000),
-            'estado' => $this->faker->randomElement(['pendiente', 'confirmada', 'cancelada']),
+            'estado' => $this->faker->randomElement(['pendiente', 'confirmada', 'cancelada', 'inactiva']),
         ];
     }
 }

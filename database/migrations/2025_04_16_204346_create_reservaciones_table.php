@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('fecha_inicio'); 
             $table->date('fecha_fin');
             $table->decimal('total', 10, 2); 
-            $table->enum('estado', ['pendiente', 'confirmada', 'cancelada'])->default('pendiente'); 
+            $table->enum('estado', ['pendiente', 'confirmada', 'cancelada', 'inactiva'])->default('pendiente'); 
             $table->string('metodo_pago')->nullable(); 
             $table->text('notas')->nullable();
             $table->integer('numero_personas')->default(1); 

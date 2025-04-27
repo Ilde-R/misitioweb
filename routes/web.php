@@ -44,6 +44,7 @@ Route::put('/reservas/{reserva}', [ReservaController::class, 'update'])
 Route::delete('/reservas/{reserva}', [ReservaController::class, 'destroy'])
     ->middleware(['auth', 'verified'])
     ->name('reservas.destroy');
+Route::put('/reservas/{id}/archivar', [ReservaController::class, 'archivar'])->name('reservas.archivar');
 
 
 
