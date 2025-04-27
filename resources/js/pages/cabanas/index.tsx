@@ -42,7 +42,7 @@ const Index = ({ cabanas }: Props) => {
                 <h1 className="mb-4 text-3xl font-bold">Cabañas Registradas</h1>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {cabanas.map((cabana) => (
-                        <Card key={cabana.id} className="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-lg">
+                        <Card key={cabana.id} className="flex h-full flex-col overflow-hidden rounded-lg">
                             <CardHeader>
                                 <img src={`/storage/${cabana.imagen}`} alt={cabana.nombre} className="h-48 w-full object-cover" />
                                 <CardTitle>{cabana.nombre}</CardTitle>
