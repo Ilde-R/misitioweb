@@ -1,7 +1,9 @@
+import { NavFooter } from '@/components/nav-footer';
+import { NavUser } from '@/components/nav-user';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { SidebarFooter } from '@/components/ui/sidebar';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router } from '@inertiajs/react';
@@ -68,15 +70,17 @@ const Index = ({ reservas }: Props) => {
 
                 {/* Lista de reservaciones activas */}
                 <h2 className="text-2xl font-semibold">Reservaciones Activas</h2>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="mb-20 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {' '}
+                    {/* Espacio para el SidebarFooter */}
                     {filteredReservas.length > 0 ? (
                         filteredReservas.map((reserva) => (
-                            <Card key={reserva.id}>
+                            <Card key={reserva.id} className="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-lg">
                                 <CardHeader>
                                     <CardTitle>{reserva.cabana?.nombre || 'Cabaña Desconocida'}</CardTitle>
                                     <CardDescription>{reserva.cabana?.direccion || 'Dirección no disponible'}</CardDescription>
                                 </CardHeader>
-                                <CardContent>
+                                <CardContent className="flex-grow">
                                     <p className="text-sm">
                                         <strong>Usuario:</strong> {reserva.user?.name || 'Usuario desconocido'}
                                     </p>
@@ -92,19 +96,8 @@ const Index = ({ reservas }: Props) => {
                                     <p className="text-sm">
                                         <strong>Total:</strong> ${Number(reserva.total || 0).toFixed(2)}
                                     </p>
-                                    <p
-                                        className={`mt-2 text-sm ${
-                                            reserva.estado === 'pendiente'
-                                                ? 'text-yellow-400'
-                                                : reserva.estado === 'confirmada'
-                                                  ? 'text-green-400'
-                                                  : 'text-red-400'
-                                        }`}
-                                    >
-                                        {reserva.estado}
-                                    </p>
                                 </CardContent>
-                                <CardFooter>
+                                <CardFooter className="mt-auto">
                                     <Button onClick={() => router.get(`/reservas/${reserva.id}/edit`)} className="mr-2">
                                         Editar
                                     </Button>
@@ -128,15 +121,17 @@ const Index = ({ reservas }: Props) => {
 
                 {/* Historial de reservaciones */}
                 <h2 className="mt-8 text-2xl font-semibold">Historial de Reservaciones</h2>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="mb-20 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {' '}
+                    {/* Espacio para el SidebarFooter */}
                     {filteredHistorialReservas.length > 0 ? (
                         filteredHistorialReservas.map((reserva) => (
-                            <Card key={reserva.id}>
+                            <Card key={reserva.id} className="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-lg">
                                 <CardHeader>
                                     <CardTitle>{reserva.cabana?.nombre || 'Cabaña Desconocida'}</CardTitle>
                                     <CardDescription>{reserva.cabana?.direccion || 'Dirección no disponible'}</CardDescription>
                                 </CardHeader>
-                                <CardContent>
+                                <CardContent className="flex-grow">
                                     <p className="text-sm">
                                         <strong>Usuario:</strong> {reserva.user?.name || 'Usuario desconocido'}
                                     </p>
@@ -153,7 +148,7 @@ const Index = ({ reservas }: Props) => {
                                         <strong>Total:</strong> ${Number(reserva.total || 0).toFixed(2)}
                                     </p>
                                 </CardContent>
-                                <CardFooter>
+                                <CardFooter className="mt-auto">
                                     <Button
                                         onClick={() => {
                                             if (confirm('¿Estás seguro de que deseas eliminar esta reservación?')) {
@@ -172,6 +167,13 @@ const Index = ({ reservas }: Props) => {
                     )}
                 </div>
             </div>
+
+            {/* SidebarFooter */}
+            <SidebarFooter>
+                <div className="fixed right-4 bottom-4">
+                    <Button onClick={() => router.get('/reservas/create')}>Crear Reservación</Button>
+                </div>
+            </SidebarFooter>
         </AppLayout>
     );
 };
