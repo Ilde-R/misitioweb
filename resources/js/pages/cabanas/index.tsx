@@ -1,4 +1,4 @@
-// src/pages/Cabanas/Index.tsx
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
@@ -42,31 +42,46 @@ const Index = ({ cabanas }: Props) => {
                 <h1 className="mb-4 text-3xl font-bold">Cabañas Registradas</h1>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {cabanas.map((cabana) => (
-                        <div
-                            key={cabana.id}
-                            className="transform overflow-hidden rounded-lg bg-black/80 text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:bg-black/60"
-                        >
-                            <img src={`/storage/${cabana.imagen}`} alt={cabana.nombre} className="h-48 w-full object-cover" />
-                            <div className="p-4">
-                                <h2 className="text-xl font-semibold">{cabana.nombre}</h2>
-                                <p className="text-sm text-gray-300">
+                        <Card key={cabana.id} className="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-lg">
+                            <CardHeader>
+                                <img src={`/storage/${cabana.imagen}`} alt={cabana.nombre} className="h-48 w-full object-cover" />
+                                <CardTitle>{cabana.nombre}</CardTitle>
+                                <CardDescription>
                                     {cabana.direccion}, {cabana.ciudad}, {cabana.estado}, {cabana.pais}
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="flex-grow">
+                                {/* Precio */}
+                                <p className="text-sm">
+                                    <strong>Precio: </strong>${cabana.precio_noche} por noche
                                 </p>
-                                <p className="mt-2 text-lg font-semibold">${cabana.precio_noche} por noche</p>
+                                {/* Descripción */}
+                                <p className="text-sm">
+                                    <strong>Descripción: </strong>
+                                    {cabana.descripcion}
+                                </p>
+                                {/* Capacidad */}
+                                <p className="text-sm">
+                                    <strong>Capacidad: </strong>
+                                    {cabana.capacidad} personas
+                                </p>
+                                {/* Servicios */}
+                                <p className="text-sm">
+                                    <strong>Servicios: </strong>
+                                    {Array.isArray(cabana.servicios) ? cabana.servicios.join(', ') : JSON.parse(cabana.servicios || '[]').join(', ')}
+                                </p>
+                                {/* Políticas */}
+                                <p className="text-sm">
+                                    <strong>Políticas: </strong>
+                                    {cabana.politicas}
+                                </p>
+                            </CardContent>
+                            <CardFooter className="mt-auto">
                                 <p className={`mt-2 ${cabana.disponible ? 'text-green-400' : 'text-red-400'}`}>
                                     {cabana.disponible ? 'Disponible' : 'No disponible'}
                                 </p>
-                                <p className="mt-2 text-sm text-gray-400">{cabana.descripcion}</p>
-                                <ul className="mt-2 text-sm text-gray-300">
-                                    {Array.isArray(cabana.servicios)
-                                        ? cabana.servicios.map((servicio, index) => <li key={index}>- {servicio}</li>)
-                                        : JSON.parse(cabana.servicios || '[]').map((servicio: string, index: number) => (
-                                              <li key={index}>- {servicio}</li>
-                                          ))}
-                                </ul>
-                                <p className="mt-2 text-sm text-gray-400">Políticas: {cabana.politicas}</p>
-                            </div>
-                        </div>
+                            </CardFooter>
+                        </Card>
                     ))}
                 </div>
             </div>

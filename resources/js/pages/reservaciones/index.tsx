@@ -57,9 +57,6 @@ const Index = ({ reservas }: Props) => {
 
                 {/* Buscador */}
                 <div className="mb-6">
-                    <Label htmlFor="search" className="mb-2 block text-sm font-medium text-gray-700">
-                        Buscar por Nombre
-                    </Label>
                     <Input
                         id="search"
                         type="text"

@@ -176,10 +176,17 @@ public function cancelar(Reserva $reserva)
 public function archivar($id)
 {
     $reservacion = Reserva::findOrFail($id);
-    $reservacion->estado = 'inactiva'; // Cambiar el estado a inactiva
+
+    $reservacion->estado = 'inactiva'; 
     $reservacion->save();
 
-    return redirect()->back()->with('success', 'Reserva archivada correctamente.');
+    $cabana = $reservacion->cabana;
+    if ($cabana) {
+        $cabana->disponible = true; // Marcar la cabaña como disponible
+        $cabana->save();
+    }
+
+    return redirect()->back()->with('success', 'Reserva archivada correctamente y  cabaña disponible.');
 }
 
 }
