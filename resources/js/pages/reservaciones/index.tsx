@@ -75,7 +75,7 @@ const Index = ({ reservas }: Props) => {
                     {/* Espacio para el SidebarFooter */}
                     {filteredReservas.length > 0 ? (
                         filteredReservas.map((reserva) => (
-                            <Card key={reserva.id} className="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-lg">
+                            <Card key={reserva.id} className="flex h-full flex-col overflow-hidden rounded-lg">
                                 <CardHeader>
                                     <CardTitle>{reserva.cabana?.nombre || 'Cabaña Desconocida'}</CardTitle>
                                     <CardDescription>{reserva.cabana?.direccion || 'Dirección no disponible'}</CardDescription>
@@ -96,6 +96,9 @@ const Index = ({ reservas }: Props) => {
                                     <p className="text-sm">
                                         <strong>Total:</strong> ${Number(reserva.total || 0).toFixed(2)}
                                     </p>
+                                    <p className="text-sm">
+                                        <strong>Estado:</strong> {reserva.estado || 'Usuario desconocido'}
+                                    </p>
                                 </CardContent>
                                 <CardFooter className="mt-auto">
                                     <Button onClick={() => router.get(`/reservas/${reserva.id}/edit`)} className="mr-2">
@@ -115,7 +118,7 @@ const Index = ({ reservas }: Props) => {
                             </Card>
                         ))
                     ) : (
-                        <p className="text-center text-white">No se encontraron reservaciones activas.</p>
+                        <p className="text-center">No se encontraron reservaciones activas.</p>
                     )}
                 </div>
 
@@ -126,7 +129,7 @@ const Index = ({ reservas }: Props) => {
                     {/* Espacio para el SidebarFooter */}
                     {filteredHistorialReservas.length > 0 ? (
                         filteredHistorialReservas.map((reserva) => (
-                            <Card key={reserva.id} className="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-lg">
+                            <Card key={reserva.id} className="flex h-full flex-col overflow-hidden rounded-lg">
                                 <CardHeader>
                                     <CardTitle>{reserva.cabana?.nombre || 'Cabaña Desconocida'}</CardTitle>
                                     <CardDescription>{reserva.cabana?.direccion || 'Dirección no disponible'}</CardDescription>
@@ -163,7 +166,7 @@ const Index = ({ reservas }: Props) => {
                             </Card>
                         ))
                     ) : (
-                        <p className="text-center text-white">No hay reservaciones en el historial.</p>
+                        <p className="text-center">No hay reservaciones en el historial.</p>
                     )}
                 </div>
             </div>

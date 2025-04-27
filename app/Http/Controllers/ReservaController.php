@@ -27,16 +27,26 @@ class ReservaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
-    {
-        $cabanas = Cabana::where('disponible', true)->get();
-    $usiarios = User::all(['id', 'name']);
 
+public function create(Request $request)
+{
+    // Obtener cabañas disponibles
+    $cabanas = Cabana::where('disponible', true)->get(['id', 'nombre', 'direccion', 'capacidad', 'precio_noche', 'disponible', 'imagen']);
+
+    // Obtener usuarios
+    $usuarios = User::all(['id', 'name']);
+
+    // Verificar si hay cabañas disponibles
+    if ($cabanas->isEmpty()) {
+        return redirect()->route('reservas.index')->with('error', 'No hay cabañas disponibles.');
+    }
+
+    // Retornar vista con datos
     return Inertia::render('reservaciones/create', [
         'cabanas' => $cabanas,
-        'usuarios' => $usiarios,
+        'usuarios' => $usuarios,
     ]);
-    }
+}
 
     /**
      * Store a newly created resource in storage.

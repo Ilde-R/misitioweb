@@ -1,3 +1,4 @@
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
@@ -52,28 +53,35 @@ const Dashboard = ({ cabanas }: Props) => {
                     <h2 className="text-subtitle-light dark:text-subtitle-dark mt-8 text-2xl font-semibold">Cabañas Disponibles</h2>
                     <div className="grid gap-8 md:grid-cols-3">
                         {Array.isArray(cabanas) && cabanas.length > 0 ? (
-                            cabanas.map((cabana) => {
-                                return (
+                            cabanas.map(
+                                (cabana) =>
                                     cabana.disponible && (
-                                        <div
+                                        <Card
                                             key={cabana.id}
-                                            className="mt-6 rounded-2xl border border-white/20 bg-black/70 p-6 text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                                            className="flex h-full flex-col"
                                         >
-                                            <img
-                                                src={cabana.imagen ? `/storage/${cabana.imagen}` : '/images/default-cabana.jpg'}
-                                                alt={`Imagen de la cabaña ${cabana.nombre}`}
-                                                className="h-56 w-full rounded-xl object-cover"
-                                            />
-                                            <h3 className="mt-4 text-xl font-bold">{cabana.nombre}</h3>
-                                            <p className="text-sm text-gray-300">{cabana.direccion}</p>
-                                            <p className="mt-3 text-lg font-semibold">${cabana.precio_noche} por noche</p>
-                                            <p className={`mt-3 text-sm ${cabana.disponible ? 'text-green-400' : 'text-red-400'}`}>
-                                                {cabana.disponible ? 'Disponible' : 'No disponible'}
-                                            </p>
-                                        </div>
-                                    )
-                                );
-                            })
+                                            <CardHeader>
+                                                <img
+                                                    src={cabana.imagen ? `/storage/${cabana.imagen}` : '/images/default-cabana.jpg'}
+                                                    alt={`Imagen de la cabaña ${cabana.nombre}`}
+                                                    className="h-56 w-full rounded-xl object-cover"
+                                                />
+                                                <CardTitle>{cabana.nombre}</CardTitle>
+                                                <CardDescription>
+                                                    {cabana.direccion || 'Dirección no disponible'}
+                                                </CardDescription>
+                                            </CardHeader>
+                                            <CardContent>
+                                                ${cabana.precio_noche} por noche
+                                            </CardContent>
+                                            <CardFooter>
+                                                <p className={`mt-2 text-sm ${cabana.disponible ? 'text-green-400' : 'text-red-400'}`}>
+                                                    {cabana.disponible ? 'Disponible' : 'No disponible'}
+                                                </p>
+                                            </CardFooter>
+                                        </Card>
+                                    ),
+                            )
                         ) : (
                             <p className="text-white">No hay cabañas disponibles en este momento.</p>
                         )}
