@@ -51,9 +51,10 @@ const Create = ({ cabanas = [], usuarios = [] }: Props) => {
         numero_personas: 1,
     });
 
-    const handleSubmit: FormEventHandler = (e) => {
+        const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
         post('/reservas', {
+            ...data, // Envía los datos actuales sin el total
             onFinish: () => {
                 // Acción después de enviar el formulario
             },

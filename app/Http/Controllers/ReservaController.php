@@ -52,36 +52,43 @@ public function create(Request $request)
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-        {
-    // Validar los datos del formulario
-    $validated = $request->validate([
-        'user_id' => 'required|exists:users,id', // Usuario que realiza la reserva
-        'cabana_id' => 'required|exists:cabanas,id', // Cabaña reservada
-        'fecha_inicio' => 'required|date|after_or_equal:today',
-        'fecha_fin' => 'required|date|after:fecha_inicio', // Fecha de fin
-        'total' => 'required|numeric|min:0', // Monto total
-        'estado' => 'required|in:pendiente,confirmada,cancelada', // Estado de la reserva
-        'metodo_pago' => 'nullable|string|max:255', // Método de pago
-        'notas' => 'nullable|string|max:1000', // Notas adicionales
-        'numero_personas' => 'required|integer|min:1', // Número de personas
-    ]);
-
-    // Crear la reserva
-    Reserva::create([
-        'user_id' => $validated['user_id'],
-        'cabana_id' => $validated['cabana_id'],
-        'fecha_inicio' => $validated['fecha_inicio'],
-        'fecha_fin' => $validated['fecha_fin'],
-        'total' => $validated['total'],
-        'estado' => $validated['estado'],
-        'metodo_pago' => $validated['metodo_pago'] ?? null,
-        'notas' => $validated['notas'] ?? null,
-        'numero_personas' => $validated['numero_personas'],
-    ]);
-
-    // Redirigir con un mensaje de éxito
-    return redirect()->route('reservas.index')->with('success', 'Reserva creada correctamente.');
-}
+    {
+        // Validar los datos del formulario
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id', // Usuario que realiza la reserva
+            'cabana_id' => 'required|exists:cabanas,id', // Cabaña reservada
+            'fecha_inicio' => 'required|date|after_or_equal:today',
+            'fecha_fin' => 'required|date|after:fecha_inicio', // Fecha de fin
+            'total' => 'nullable|numeric|min:0', // Monto total (puede ser opcional porque lo calcularemos)
+            'estado' => 'required|in:pendiente,confirmada,cancelada', // Estado de la reserva
+            'metodo_pago' => 'nullable|string|max:255', // Método de pago
+            'notas' => 'nullable|string|max:1000', // Notas adicionales
+            'numero_personas' => 'required|integer|min:1', // Número de personas
+        ]);
+    
+        // Calcular el total
+        $cabana = Cabana::findOrFail($validated['cabana_id']);
+        $fechaInicio = new \DateTime($validated['fecha_inicio']);
+        $fechaFin = new \DateTime($validated['fecha_fin']);
+        $dias = $fechaInicio->diff($fechaFin)->days; // Diferencia en días
+        $total = $dias * $cabana->precio_noche;
+    
+        // Crear la reserva con el total calculado
+        Reserva::create([
+            'user_id' => $validated['user_id'],
+            'cabana_id' => $validated['cabana_id'],
+            'fecha_inicio' => $validated['fecha_inicio'],
+            'fecha_fin' => $validated['fecha_fin'],
+            'total' => $total, // Usar el total calculado
+            'estado' => $validated['estado'],
+            'metodo_pago' => $validated['metodo_pago'] ?? null,
+            'notas' => $validated['notas'] ?? null,
+            'numero_personas' => $validated['numero_personas'],
+        ]);
+    
+        // Redirigir con un mensaje de éxito
+        return redirect()->route('reservas.index')->with('success', 'Reserva creada correctamente.');
+    }
 
     /**
      * Display the specified resource.
