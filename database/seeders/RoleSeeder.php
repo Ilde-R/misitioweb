@@ -14,12 +14,44 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $rolAdmin = Role::create(["name"=>"Admin"]);
-        $rolLector = Role::create(["name"=>"Lector"]);
+       $roles = ['Admin', 'Lector'];
 
-        $permission1 = Permission::create(['name' => 'index']);
+       foreach ($roles as $role){
+        Role::firstOrCreate(['name' => $role]);
+    }
+    
 
-        $permission1->syncRoles([$rolAdmin]);
+       $permissions = [
+        //Permisos Cabana       
+        'cabana.index',
+        'cabana.create',
+        'cabana.store',
+        //Permisos Reserva
+        'reserva.index',
+        'reserva.create',
+        'reserva.store',    
+        'reserva.edit',
+        'reserva.update',
+        'reserva.destroy',
+        'reserva.archivar',
+       ];
 
+       foreach ($permissions as $permission){
+            Permission::firstOrCreate(['name' => $permission]);
+       }
+
+       //Pemisos Admin
+       $adminRole = Role::where('name', 'Admin')->first();
+       if($adminRole){
+            $adminRole->syncPermissions($permissions);
+       }
+       //Permisos Lector
+       $lectorRole = Role::where('name', 'Lector')->first();
+        if ($lectorRole) {
+            $lectorRole->syncPermissions([
+                'cabana.index',
+                'reserva.index',
+            ]);
+        }
     }
 }

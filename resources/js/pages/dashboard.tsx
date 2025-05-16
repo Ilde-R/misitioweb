@@ -24,7 +24,7 @@ interface Cabana {
 
 // Definir las propiedades que recibirá el componente
 interface Props {
-    cabanas: Cabana[]; // Recibimos un arreglo de cabañas
+    cabanas: Cabana[];
 }
 
 // Componente principal

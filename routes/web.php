@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CabanaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReservaController;
 use App\Models\Cabana;
 use App\Models\User;
@@ -8,43 +9,29 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 //Pantalla Principal
-Route::get('/', function () {
-    $cabanas = Cabana::where('disponible', true)->get();
-
-    return Inertia::render('dashboard', [
-        'cabanas' => $cabanas,
-    ]);
-})->name('home');
+Route::get('/', DashboardController::class)->name('home'); 
 
 //Cabañas
-Route::get('/cabanas', [CabanaController::class, 'index'])
-    ->middleware(['auth', 'verified', 'can:index']) 
-    ->name('cabanas.index');
-Route::get('/cabanas/create', [CabanaController::class, 'create'])->name('cabanas.create');
-Route::post('/cabanas', [CabanaController::class, 'store'])->name('cabanas.store');
-
+Route::middleware(['auth', 'verified'])->prefix('cabanas')->name('cabanas.')->group(function () {
+    Route::get('/', [CabanaController::class, 'index'])->middleware('can:cabana.index')->name('index');
+    Route::get('/create', [CabanaController::class, 'create'])->middleware('can:cabana.create')->name('create');
+    
+    //Cambios a la BDD
+    Route::post('/', [CabanaController::class, 'store'])->middleware('can:cabana.store')->name('store');
+});
 
 //Reservas
-Route::get('/reservas', [ReservaController::class, 'index'])
-    ->middleware(['auth','verified'])
-    ->name('reservas.index');
-//Mostrar formulario de reserva
-Route::get('/reservas/create', [ReservaController::class, 'create'])->name('cabanas.create');
-//Guardar reserva
-Route::post('/reservas', [ReservaController::class, 'store'])->name('reservas.store');
-// Mostrar el formulario de edición
-Route::get('/reservas/{reserva}/edit', [ReservaController::class, 'edit'])
-    ->middleware(['auth', 'verified'])
-    ->name('reservas.edit');
-// Actualizar la reserva
-Route::put('/reservas/{reserva}', [ReservaController::class, 'update'])
-    ->middleware(['auth', 'verified'])
-    ->name('reservas.update');
-// Eliminar la reserva
-Route::delete('/reservas/{reserva}', [ReservaController::class, 'destroy'])
-    ->middleware(['auth', 'verified'])
-    ->name('reservas.destroy');
-Route::put('/reservas/{id}/archivar', [ReservaController::class, 'archivar'])->name('reservas.archivar');
+Route::middleware(['auth', 'verified'])->prefix('reservas')->name('reservas.')->group(function () {
+    Route::get('/', [ReservaController::class, 'index'])->middleware('can:reserva.index')->name('index');
+    Route::get('/create', [ReservaController::class, 'create'])->middleware('can:reserva.create')->name('create');
+    Route::get('/{reserva}/edit', [ReservaController::class, 'edit'])->middleware('can:reserva.edit')->name('edit');
+    
+    //Cambios a la BDD
+    Route::post('/', [ReservaController::class, 'store'])->middleware('can:reserva.store')->name('store');
+    Route::put('/{reserva}', [ReservaController::class, 'update'])->middleware('can:reserva.edit')->name('update');
+    Route::delete('/{reserva}', [ReservaController::class, 'destroy'])->middleware('can:reserva.destroy')->name('destroy');
+    Route::put('/{reserva}/archivar', [ReservaController::class, 'archivar'])->middleware('can:reserva.archivar')->name('archivar');
+});
 
 
 

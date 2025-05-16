@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Bed, BookOpen, Globe, Headphones, LayoutGrid, MapPin, Folder } from 'lucide-react'; 
+import { Bed, BookOpen, Tent, Headphones, LayoutGrid, MapPin, Folder } from 'lucide-react'; 
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -19,25 +19,10 @@ const mainNavItems: NavItem[] = [
         icon: Bed, 
     },
     {
-        title: 'Paquetes Turísticos',
-        href: '/paquetes-turisticos',
-        icon: MapPin, 
-    },
-    {
-        title: 'Experiencias Culturales y de Aventura',
-        href: '/experiencias-culturales',
-        icon: Globe, 
-    },
-    {
-        title: 'Atención Personalizada',
-        href: '/atencion-personalizada',
-        icon: Headphones, 
-    },
-    {
-        title: 'Turismo Educativo y Temático',
-        href: '/turismo-educativo',
-        icon: BookOpen, 
-    },
+        title: 'Cabañas',
+        href: '/cabanas',
+        icon: Tent,
+    }
 ];
 
 const footerNavItems: NavItem[] = [
